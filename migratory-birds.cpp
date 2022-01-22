@@ -14,32 +14,45 @@ vector<string> split(const string &);
  */
 
 int migratoryBirds(vector<int> arr) {
-    int c,max;
-    vector<int> v;
-    max =1;
-    sort(arr.begin(),arr.end());
-    c= arr[0];
-    for(int i=1;i<arr.size();i++){
-        if(arr[i] == c) max++;
-        else{
-            v.push_back(max);
-            max = 1;
-            c = arr[i];
+    // int max=1;
+    // vector<int> v;
+    // sort(arr.begin(),arr.end());
+    // int c = arr[0];
+    
+    // for(int i =1 ;i<arr.size();i++){
+    //     if(arr[i] == c) max++;
+    //     else{
+    //         v.push_back(max);
+    //         c = arr[i];
+    //         max =1;
+    //     }
+    // }
+    // for(int i=1;i<arr.size();){
+    //     if(arr[i] == arr[i-1]) arr.erase(arr.begin()+i);
+    //     else i++;
+    // }
+    // int t=0;
+    // int m =0;
+    // for(int i=0;i<v.size();i++){
+    //     if(v[i]>m){
+    //         m = v[i];
+    //         t = i;
+    //     }
+    // }
+    // return arr[t];
+    map<int,int> m;
+    for(auto &i : arr){
+        m[i]++;
+    }
+    
+    map<int,int>::iterator tracker = m.begin();
+    for( map<int,int>::iterator itr = ++tracker; itr != m.end(); ++itr ){
+        if(itr->second > tracker->second) tracker = itr;
+        else if(itr->second == tracker->second){
+            tracker = (tracker->first < itr->first) ? tracker : itr;
         }
     }
-    for(int i=1;i<arr.size();){
-        if(arr[i] == arr[i-1]) arr.erase(arr.begin()+i);
-        else i++;
-    }
-    int m = 0;
-    int t=0;
-    for(int i=0;i<v.size();i++){
-        if(m<v[i]){
-            m = v[i];
-            t = i;
-        }
-    }
-    return arr[t];
+    return tracker->first;
 }
 
 int main()
