@@ -15,8 +15,9 @@ string gameOfThrones(string s) {
     for(auto i : s) arr[i-97]++;
     for(int i=0;i<26;i++){
         if(arr[i]!=0 && arr[i]%2!=0) c++;
+        if(c>1) return "NO";
     }
-    return (c<2) ? "YES" : "NO";
+    return "YES";
 }
 
 int main()
