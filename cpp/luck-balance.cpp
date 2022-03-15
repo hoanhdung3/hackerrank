@@ -16,18 +16,32 @@ vector<string> split(const string &);
  */
 
 int luckBalance(int k, vector<vector<int>> contests) {
-    int c, sum;
-    c = sum = 0;
-    sort(contests.rbegin(), contests.rend());
-    for(int i=0;i<contests.size();i++){
-        if(contests[i][1] == 0 || (contests[i][1]==1 && c<k)){
-            sum+=contests[i][0];
-            if(contests[i][1]!=0) c++;
+    int c = 0;
+    for(int i=0;i<contests.size();){
+        if(contests[i][1] == 0){
+            c += contests[i][0];
+            contests.erase(contests.begin()+i);
         }
-        else
-            sum-=contests[i][0];
+        else i++;
     }
-    return sum;
+    sort(contests.rbegin(), contests.rend());
+    int s = 0;
+    for(int i=0;i<contests.size();i++){
+        (s<k) ? (c+=contests[i][0]) : (c-=contests[i][0]);
+        s++;
+    }
+    // int c, sum;
+    // c = sum = 0;
+    // sort(contests.rbegin(), contests.rend());
+    // for(int i=0;i<contests.size();i++){
+    //     if(contests[i][1] == 0 || (contests[i][1]==1 && c<k)){
+    //         sum+=contests[i][0];
+    //         if(contests[i][1]!=0) c++;
+    //     }
+    //     else
+    //         sum-=contests[i][0];
+    // }   
+    return c;
 }
 
 int main()
